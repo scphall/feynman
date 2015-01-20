@@ -1,0 +1,27 @@
+#!/usr/bin/python
+
+# The required command is of the form:
+#     pdftk A=in.pdf cat A1 output out.pdf
+
+from sys import argv
+import os
+
+def main(pdfi):
+    if pdfi.find('.pdf') < 0:
+        pdfi = '%s.pdf'%pdfi
+    info = os.popen('pdfinfo %s'%pdfi)
+    line = info.readline()
+    while line:
+        line = line.split(':')
+        if line[0] == 'Pages':
+            break
+        line = info.readline()
+    pnum = int(line[1].strip())
+    for page in xrange(1,pnum+1):
+        pdfo = pdfi.replace('.pdf','_%d.pdf'%page)
+        cmd  = 'pdftk A=%s cat A%d output %s'%(pdfi,page,pdfo)
+        print 'Creating %s from page %d of %s.'%(pdfo,page,pdfi)
+        os.system(cmd)
+
+if __name__ == "__main__":
+    main(argv[1])

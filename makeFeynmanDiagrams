@@ -1,0 +1,25 @@
+#!/usr/bin/python
+from os import system
+fd = 'feynman_diagrams'
+
+print 'Making diagrams'
+system('make')
+
+cmds = [
+    'mv {}_1.pdf feynman_dsphi_sm.pdf',
+    'mv {}_2.pdf feynman_dsphi_susy.pdf',
+    'mv {}_3.pdf feynman_hhh_kpipimumu.pdf',
+    'mv {}_4.pdf feynman_hhh_phikmumu.pdf',
+    'mv {}_5.pdf feynman_theory_penguin.pdf',
+    'mv {}_6.pdf feynman_theory_box.pdf',
+    'mv {}_7.pdf feynman_inf.pdf',
+    'mv {}_8.pdf diagram_ut.pdf',
+    'mv {}_9.pdf diagram_intro.pdf',
+]
+cmds = [x.format(fd) for x in cmds]
+
+print '\n Rename files'
+print ' ============'
+for cmd in cmds:
+    print cmd
+    system(cmd)
